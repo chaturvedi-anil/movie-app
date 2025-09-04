@@ -1,0 +1,27 @@
+# Node.js
+node_modules/
+package-lock.json
+npm-debug.log*
+
+# TypeScript
+dist/
+*.tsbuildinfo
+
+# Prisma
+prisma/dev.db
+*.db-journal
+
+# Environment Variables
+.env
+.env.*
+
+# Logs
+logs/
+*.log
+
+# OS/Editor
+.DS_Store
+.vscode/
+.idea/
+
+/src/generated/prisma
