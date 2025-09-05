@@ -10,6 +10,56 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id                Int                 @id @default(autoincrement())
+  name              String              
+  email             String              @unique
+  password          String               
+  role              Role                @default(USER)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  movies            Movie[]             @relation("UserMovies") 
+}
+
+model Movie{
+  id                Int               @id @default(autoincrement())
+  title             String          
+  type              MovieType 
+  director          String  
+  budget            String? 
+  location          String? 
+  duration          String? 
+  year              String? 
+  imageUrl          String? 
+  status            ApprovalStatus    @default(PENDING)
+  createdBy         Int 
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  deletedAt         DateTime?  
+  user              User              @relation("UserMovies", fields: [createdBy], references: [id])
+
+
+  @@index([status])
+  @@index([createdBy])
+  @@index([title])
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum MovieType {
+  MOVIE
+  TV_SHOW
+}
+
+enum ApprovalStatus { 
+  PENDING
+  APPROVED
+  REJECTED
 }
