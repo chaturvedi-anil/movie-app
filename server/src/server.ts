@@ -1,5 +1,16 @@
 import app from "./app";
+import { checkDatabaseConnection } from "./configs/database";
+import { ENV } from "./configs/env";
+import { logger } from "./utils/logger";
 
-app.listen(process.env.PORT, () => {
-  console.log(`express is running on port ${process.env.PORT}`);
+const startServer = async () => {
+  await checkDatabaseConnection();
+  app.listen(ENV.PORT, () => {
+    logger.info(`express is listing on port ${ENV.PORT}`);
+  });
+};
+
+startServer().catch((err) => {
+  logger.error("Server failed to start", err);
+  process.exit(1);
 });
