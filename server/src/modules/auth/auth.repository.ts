@@ -18,9 +18,10 @@ export const createUser = (data: {
       role: data.role ? data.role : "USER",
     },
     select: {
-      password: false,
-      updatedAt: false,
-      movies: false,
+      id: true,
+      name: true,
+      email: true,
+      role: true,
     },
   });
 };

@@ -1,7 +1,8 @@
 import ErrorHandler from "../../utils/error-handler";
-import { hashPassword } from "../../utils/hash";
+import { comparePassword, hashPassword } from "../../utils/hash";
 import { signToken } from "../../utils/jwt";
-import * as authService from "./auth.repository";
+
+import * as authRepository from "./auth.repository";
 
 interface SignupInput {
   name: string;
@@ -9,6 +10,12 @@ interface SignupInput {
   password: string;
   role?: "USER" | "ADMIN";
 }
+
+interface LoginInput {
+  email: string;
+  password: string;
+}
+
 export const signupUser = async ({
   name,
   email,
@@ -16,7 +23,7 @@ export const signupUser = async ({
   role = "USER",
 }: SignupInput) => {
   const data = { name, email, password, role };
-  let isUserExisting = await authService.findUserByEmail(email);
+  const isUserExisting = await authRepository.findUserByEmail(email);
 
   if (isUserExisting) {
     throw new ErrorHandler(`User with ${email} email already exists`, 400);
@@ -24,16 +31,27 @@ export const signupUser = async ({
 
   const hashedPassword = await hashPassword(password);
 
-  const user = await authService.createUser({
+  const user = await authRepository.createUser({
     ...data,
     password: hashedPassword,
   });
 
-  console.log("user  : ", user);
+  const token = signToken({ id: user.id, role: user.role });
+  return { user, token };
+};
 
-  //   if (!user) {
-  //     return;
-  //   }
-  //   const token = signToken({ id: user.id, role: user.role });
-  return { user };
+export const loginUser = async ({ email, password }: LoginInput) => {
+  const isUserExisting = await authRepository.findUserByEmail(email);
+
+  if (!isUserExisting) {
+    throw new ErrorHandler(`Invalid email or password`, 401);
+  }
+
+  const isPasswordVerified = comparePassword(password, isUserExisting.password);
+  if (!isPasswordVerified) {
+    throw new ErrorHandler(`Invalid email or password`, 401);
+  }
+
+  const token = signToken({ id: isUserExisting.id, role: isUserExisting.role });
+  return { token };
 };
