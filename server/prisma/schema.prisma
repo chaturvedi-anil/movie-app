@@ -28,11 +28,17 @@ model Movie{
   id                Int               @id @default(autoincrement())
   title             String          
   type              MovieType 
+  description       String
+  genre             String        
   director          String  
-  budget            String? 
-  location          String? 
-  duration          String? 
-  year              String? 
+  actors            String
+  language          String
+  country           String
+  budget            Decimal
+  boxOffice         Decimal?
+  location          String 
+  duration          String 
+  year              Int 
   imageUrl          String? 
   status            ApprovalStatus    @default(PENDING)
   createdBy         Int 
