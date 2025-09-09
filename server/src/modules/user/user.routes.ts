@@ -1,8 +1,10 @@
 import { Router } from "express";
-import { getProfile } from "./user.controller";
+import { getProfile, list } from "./user.controller";
+import { authorize, isAuthenticated } from "../../middlewares/auth.middleware";
 
 const userRouter = Router();
 
-userRouter.get("/profile", getProfile);
+userRouter.get("/profile", isAuthenticated, getProfile);
+userRouter.get("/", isAuthenticated, authorize(["ADMIN"]), list);
 
 export default userRouter;

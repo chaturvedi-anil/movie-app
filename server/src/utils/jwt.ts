@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { ENV } from "../configs/env";
 import ErrorHandler from "./error-handler";
 
-type TokenPayload = { id: number; role: string };
+export type TokenPayload = { id: number; role: string };
 
 export const signToken = (payload: TokenPayload) => {
   if (!ENV.JWT_SECRET) {
@@ -11,9 +11,13 @@ export const signToken = (payload: TokenPayload) => {
       500
     );
   }
-  return jwt.sign(payload, ENV.JWT_SECRET, {
-    expiresIn: ENV.JWT_EXPIRES_IN || "1d",
-  });
+  try {
+    return jwt.sign(payload, ENV.JWT_SECRET, {
+      expiresIn: ENV.JWT_EXPIRES_IN || "1d",
+    });
+  } catch (error) {
+    throw new ErrorHandler("Failed to sign JWT token", 500);
+  }
 };
 
 export const verifyToken = (token: string) => {
@@ -23,5 +27,10 @@ export const verifyToken = (token: string) => {
       500
     );
   }
-  return jwt.verify(token, ENV.JWT_SECRET);
+
+  try {
+    return jwt.verify(token, ENV.JWT_SECRET) as TokenPayload;
+  } catch (error) {
+    throw new ErrorHandler("Invalid or expired token", 401);
+  }
 };

@@ -4,7 +4,7 @@ import userRouter from "./user/user.routes";
 const router = express.Router();
 
 router.use("/auth", authRouter);
-router.use("/user", userRouter);
+router.use("/users", userRouter);
 // router.use("/movie");
 
 export default router;
