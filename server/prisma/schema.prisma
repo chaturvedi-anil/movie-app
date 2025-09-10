@@ -51,6 +51,8 @@ model Movie{
   @@index([status])
   @@index([createdBy])
   @@index([title])
+  @@index([year])
+  @@unique([id, createdBy])
 }
 
 enum Role {
