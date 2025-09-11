@@ -25,3 +25,8 @@ export const deleleMovie = async (userId: number, movieId: number) => {
   const isDeleted = await movieRepository.deleteMovie(userId, movieId);
   return isDeleted;
 };
+
+export const getPendingList = async () => {
+  const pendingList = await movieRepository.getPendingList();
+  return pendingList;
+};

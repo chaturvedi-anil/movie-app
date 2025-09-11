@@ -49,7 +49,6 @@ export const deleteMovie = CatchAsyncRequest(
     const movieId = Number(req.params.id);
 
     const isDeleted = await movieService.deleleMovie(userId, movieId);
-
     res.status(200).json({
       success: true,
       message: "Movie deleted successfully",
@@ -60,8 +59,15 @@ export const deleteMovie = CatchAsyncRequest(
 export const listMovies = CatchAsyncRequest(
   async (req: Request, res: Response, next: NextFunction) => {}
 );
-export const pendingList = CatchAsyncRequest(
-  async (req: Request, res: Response, next: NextFunction) => {}
+export const getPendingList = CatchAsyncRequest(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const pendingList = await movieService.getPendingList();
+
+    res.status(200).json({
+      success: true,
+      pendingList,
+    });
+  }
 );
 
 export const approveMovie = CatchAsyncRequest(

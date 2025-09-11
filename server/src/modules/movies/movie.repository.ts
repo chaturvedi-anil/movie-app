@@ -47,3 +47,7 @@ export const deleteMovie = (userId: number, movieId: number) => {
     },
   });
 };
+
+export const getPendingList = () => {
+  return prismaClient.movie.findMany({ where: { status: "PENDING" } });
+};

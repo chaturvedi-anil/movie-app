@@ -5,7 +5,7 @@ import {
   getmyMovies,
   createMovie,
   updateMovie,
-  pendingList,
+  getPendingList,
   approveMovie,
   deleteMovie,
 } from "./movie.controller";
@@ -30,7 +30,12 @@ movieRouter.put(
 movieRouter.delete("/:id", isAuthenticated, deleteMovie);
 
 // admin routes
-movieRouter.get("/pending", isAuthenticated, authorize(["ADMIN"]), pendingList);
+movieRouter.get(
+  "/pending",
+  isAuthenticated,
+  authorize(["ADMIN"]),
+  getPendingList
+);
 movieRouter.get("/", isAuthenticated, authorize(["ADMIN"]), listMovies);
 movieRouter.put(
   "/:id/approve",
