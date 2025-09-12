@@ -1,20 +1,21 @@
 import { Router } from "express";
 import { authorize, isAuthenticated } from "../../middlewares/auth.middleware";
 import {
-  listMovies,
-  getmyMovies,
+  getAllMovies,
+  getMyMovies,
   createMovie,
   updateMovie,
   getPendingList,
   approveMovie,
   deleteMovie,
+  rejectMovie,
 } from "./movie.controller";
 import { validateRequest } from "../../middlewares/validate.middleware";
 import { movieSchema } from "./movie.schema";
 const movieRouter = Router();
 
 // user and admin routes
-movieRouter.get("/my", isAuthenticated, getmyMovies);
+movieRouter.get("/my", isAuthenticated, getMyMovies);
 movieRouter.post(
   "/",
   isAuthenticated,
@@ -36,12 +37,19 @@ movieRouter.get(
   authorize(["ADMIN"]),
   getPendingList
 );
-movieRouter.get("/", isAuthenticated, authorize(["ADMIN"]), listMovies);
+movieRouter.get("/", isAuthenticated, authorize(["ADMIN"]), getAllMovies);
 movieRouter.put(
   "/:id/approve",
   isAuthenticated,
   authorize(["ADMIN"]),
   approveMovie
+);
+
+movieRouter.put(
+  "/:id/reject",
+  isAuthenticated,
+  authorize(["ADMIN"]),
+  rejectMovie
 );
 
 export default movieRouter;

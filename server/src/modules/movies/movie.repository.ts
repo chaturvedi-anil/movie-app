@@ -51,3 +51,23 @@ export const deleteMovie = (userId: number, movieId: number) => {
 export const getPendingList = () => {
   return prismaClient.movie.findMany({ where: { status: "PENDING" } });
 };
+
+export const getAllMovies = () => {
+  return prismaClient.movie.findMany();
+};
+
+export const approveMovie = (movieId: number) => {
+  return prismaClient.movie.update({
+    where: { id: movieId },
+    data: {
+      status: "APPROVED",
+    },
+  });
+};
+
+export const rejectMovie = (movieId: number) => {
+  return prismaClient.movie.update({
+    where: { id: movieId },
+    data: { status: "REJECTED" },
+  });
+};

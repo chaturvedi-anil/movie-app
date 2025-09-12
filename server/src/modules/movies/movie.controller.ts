@@ -17,7 +17,7 @@ export const createMovie = CatchAsyncRequest(
   }
 );
 
-export const getmyMovies = CatchAsyncRequest(
+export const getMyMovies = CatchAsyncRequest(
   async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.user!.id;
     const movieList = await movieService.getmyMovies(userId);
@@ -56,8 +56,15 @@ export const deleteMovie = CatchAsyncRequest(
   }
 );
 
-export const listMovies = CatchAsyncRequest(
-  async (req: Request, res: Response, next: NextFunction) => {}
+export const getAllMovies = CatchAsyncRequest(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const movies = await movieService.getAllMovies();
+
+    res.status(200).json({
+      success: true,
+      movies,
+    });
+  }
 );
 export const getPendingList = CatchAsyncRequest(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -71,5 +78,28 @@ export const getPendingList = CatchAsyncRequest(
 );
 
 export const approveMovie = CatchAsyncRequest(
-  async (req: Request, res: Response, next: NextFunction) => {}
+  async (req: Request, res: Response, next: NextFunction) => {
+    const movieId = Number(req.params.id);
+
+    const approved = await movieService.approveMovie(movieId);
+
+    res.status(200).json({
+      success: true,
+      message: "Movied approved successfully",
+      approved,
+    });
+  }
+);
+
+export const rejectMovie = CatchAsyncRequest(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const movieId = Number(req.params.id);
+    const rejected = await movieService.rejectMovie(movieId);
+
+    res.status(200).json({
+      success: true,
+      message: "Movie rejected successfully",
+      rejected,
+    });
+  }
 );

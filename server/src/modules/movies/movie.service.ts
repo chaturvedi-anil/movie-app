@@ -30,3 +30,18 @@ export const getPendingList = async () => {
   const pendingList = await movieRepository.getPendingList();
   return pendingList;
 };
+
+export const getAllMovies = async () => {
+  const movies = await movieRepository.getAllMovies();
+  return movies;
+};
+
+export const approveMovie = async (movieId: number) => {
+  const approved = await movieRepository.approveMovie(movieId);
+  return approved;
+};
+
+export const rejectMovie = async (movieId: number) => {
+  const rejected = await movieRepository.rejectMovie(movieId);
+  return rejected;
+};
