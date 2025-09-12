@@ -7,7 +7,7 @@ import {
   updateMovie,
   getPendingList,
   approveMovie,
-  deleteMovie,
+  softDelete,
   rejectMovie,
 } from "./movie.controller";
 import { validateRequest } from "../../middlewares/validate.middleware";
@@ -28,7 +28,7 @@ movieRouter.put(
   validateRequest(movieSchema),
   updateMovie
 );
-movieRouter.delete("/:id", isAuthenticated, deleteMovie);
+movieRouter.delete("/:id", isAuthenticated, softDelete);
 
 // admin routes
 movieRouter.get(

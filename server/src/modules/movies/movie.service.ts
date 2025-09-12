@@ -21,8 +21,8 @@ export const updateMovie = async (
   return movie;
 };
 
-export const deleleMovie = async (userId: number, movieId: number) => {
-  const isDeleted = await movieRepository.deleteMovie(userId, movieId);
+export const softDelete = async (userId: number, movieId: number) => {
+  const isDeleted = await movieRepository.softDelete(userId, movieId);
   return isDeleted;
 };
 

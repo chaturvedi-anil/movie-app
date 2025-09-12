@@ -43,12 +43,12 @@ export const updateMovie = CatchAsyncRequest(
   }
 );
 
-export const deleteMovie = CatchAsyncRequest(
+export const softDelete = CatchAsyncRequest(
   async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.user!.id;
     const movieId = Number(req.params.id);
 
-    const isDeleted = await movieService.deleleMovie(userId, movieId);
+    const isDeleted = await movieService.softDelete(userId, movieId);
     res.status(200).json({
       success: true,
       message: "Movie deleted successfully",

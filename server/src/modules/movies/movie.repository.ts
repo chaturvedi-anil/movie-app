@@ -35,7 +35,7 @@ export const updateMovie = (
   });
 };
 
-export const deleteMovie = (userId: number, movieId: number) => {
+export const softDelete = (userId: number, movieId: number) => {
   return prismaClient.movie.update({
     where: {
       id: movieId,
