@@ -1,9 +1,12 @@
-import React from 'react'
+import { Routes, Route } from 'react-router-dom'
+import HomePage from './pages/HomePage'
 
-function App() {
+
+export default function App() {
+
   return (
-    <div className='text-red-300'>App</div>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+    </Routes>
   )
 }
-
-export default App
