@@ -5,7 +5,7 @@ import Navbar from '../ui/Navbar'
 
 export default function HomePage() {
   return (
-   <div className='mx-80 bg-gray-200'>
+   <div className=''>
     <Navbar></Navbar>
    </div>
   )
