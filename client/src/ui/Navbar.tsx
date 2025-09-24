@@ -4,17 +4,17 @@ import Input from "./Input";
 
 const Navbar = () => {
   return (
-    <nav className="flex items-center justify-around">
+    <nav className="flex items-center justify-around bg-black">
       <div className="m-2 ">
-        <img src="../../public/logo.png" alt="" className="rounded-md h-10 hover:cursor-pointer" />
+        <img src="/logo.png" alt="" className="rounded-md h-10 hover:cursor-pointer" />
       </div>
       <div>
         <form action="">
-          <Input type="text" placeholder="Search" label="Search your movies"/>
+          <Input type="text" placeholder="Search..." className="bg-white"/>
         </form>
       </div>
       <div>
-        <Button variant="secondary">Sign In</Button>
+        <Button variant="primary">Sign In</Button>
       </div>
     </nav>
   );
